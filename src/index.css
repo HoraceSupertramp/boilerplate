@@ -1,5 +1,4 @@
 
-.container {
-    background: blue;
-    height: 50px;
+:global(html), :global(body) {
+    margin: 0;
 }

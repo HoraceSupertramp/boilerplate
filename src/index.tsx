@@ -1,5 +1,6 @@
 import React from "react";
 import {render} from "react-dom";
-import {container} from './index.css';
+import './index.css';
+import App from "./components/App";
 
-render(<div className={container}>CIAO</div>, document.getElementById('root'));
+render(<App/>, document.getElementById('root'));

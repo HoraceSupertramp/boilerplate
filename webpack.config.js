@@ -17,5 +17,8 @@ module.exports = {
                 loader: 'ts-loader'
             }
         ]
+    },
+    devServer: {
+        contentBase: path.resolve(__dirname, 'public')
     }
 };

@@ -1,24 +1,19 @@
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
-const nightwatch = require('gulp-nightwatch');
-const del = require('del');
+const child_process = require('child_process');
 
-const tsProject = ts.createProject('tsconfig.json');
-
-function clean() {
-    return del('./e2e/dist');
+function runTest(cb) {
+    child_process.exec('nightwatch --headless', (err, stdout, stderr) => {
+        console.log(stdout);
+        console.error(stderr);
+        cb(err);
+    });
 }
 
-function test() {
-    return gulp.src('./e2e/dist', { read: false }).pipe(
-        nightwatch()
-    );
-}
-
-function compile() {
+function compileTest() {
     return gulp.src(['index.d.ts', 'e2e/**/*.ts'])
-        .pipe(tsProject())
-        .pipe(gulp.dest('./e2e/dist'))
+        .pipe(ts.createProject('tsconfig.json')())
+        .pipe(gulp.dest('./build/e2e'));
 }
 
-exports.default = gulp.series(compile, test, clean);
+exports.test = gulp.series(compileTest, runTest);
